@@ -3,6 +3,7 @@ package componenteGamificacao.storage;
 import java.util.List;
 
 import componenteGamificacao.model.Achievement;
+import componenteGamificacao.service.achievement.AchievementObserver;
 
 public class MemoryAchievementStorage implements AchievementStorage {
 	
@@ -10,6 +11,9 @@ public class MemoryAchievementStorage implements AchievementStorage {
 
 	@Override
 	public void addAchievement(String user, Achievement a) {
+		for (AchievementObserver observador : AchievementObserver.OBSERVADORES) {
+			a.adicionarObservador(observador);
+		}
 	}
 
 	@Override
