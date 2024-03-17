@@ -71,5 +71,18 @@ class ForumServiceGamificationProxyTest {
 		Points points = (Points) achievement;
 		assertEquals(1, points.getQuantidadePontos());
 	}
+	
+	@Test
+	void aoCurtirUmComentarioDeveAdicionar1PontoDoTipoParticipation() {
+		forumService.likeComment("moura", "Random Tópico", "Random Comentário", "randomUser");
+		List<Achievement> achievements = achievementStorage.getAchievements("moura");
+		assertEquals(1, achievements.size());
+		
+		Achievement achievement = achievementStorage.getAchievement("moura", "PARTICIPATION");
+		assertNotNull(achievement);
+		assertInstanceOf(Points.class, achievement);
+		Points points = (Points) achievement;
+		assertEquals(1, points.getQuantidadePontos());
+	}
 
 }
