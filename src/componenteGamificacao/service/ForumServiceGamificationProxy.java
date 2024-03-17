@@ -23,6 +23,8 @@ public class ForumServiceGamificationProxy implements ForumService {
 
 	@Override
 	public void likeTopic(String user, String topic, String topicUser) {
+		AchievementStorage storage = AchievementStorageFactory.getAchievementStorage();
+		storage.addAchievement(user, new Points("CREATION", user, 1));
 	}
 
 	@Override
