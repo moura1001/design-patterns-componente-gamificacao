@@ -84,5 +84,24 @@ class ForumServiceGamificationProxyTest {
 		Points points = (Points) achievement;
 		assertEquals(1, points.getQuantidadePontos());
 	}
+	
+	@Test
+	void aoAdicionarVariosTopicosDeveAcumularOsPontosDoUsuario() {
+		forumService.addTopic("moura", "Meu primeiro tópico");
+		forumService.addTopic("moura", "Meu segundo tópico");
+		forumService.addTopic("moura", "Meu terceiro tópico");
+		List<Achievement> achievements = achievementStorage.getAchievements("moura");
+		assertEquals(2, achievements.size());
+		
+		Achievement achievement = achievementStorage.getAchievement("moura", "CREATION");
+		assertNotNull(achievement);
+		assertInstanceOf(Points.class, achievement);
+		Points points = (Points) achievement;
+		assertEquals(15, points.getQuantidadePontos());
+		
+		achievement = achievementStorage.getAchievement("moura", "I CAN TALK");
+		assertNotNull(achievement);
+		assertInstanceOf(Badge.class, achievement);
+	}
 
 }
