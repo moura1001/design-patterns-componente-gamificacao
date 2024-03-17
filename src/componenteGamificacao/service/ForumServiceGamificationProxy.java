@@ -16,6 +16,9 @@ public class ForumServiceGamificationProxy implements ForumService {
 
 	@Override
 	public void addComment(String user, String topic, String comment) {
+		AchievementStorage storage = AchievementStorageFactory.getAchievementStorage();
+		storage.addAchievement(user, new Points("PARTICIPATION", user, 3));
+		storage.addAchievement(user, new Badge("LET ME ADD", user));
 	}
 
 	@Override

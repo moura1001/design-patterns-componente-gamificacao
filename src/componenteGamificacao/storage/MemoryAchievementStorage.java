@@ -11,7 +11,7 @@ import componenteGamificacao.service.achievement.AchievementObserver;
 
 public class MemoryAchievementStorage implements AchievementStorage {
 	
-	private static final Map<String, List<Achievement>> usuarios = new HashMap<>(10);
+	private final Map<String, List<Achievement>> usuarios = new HashMap<>(10);
 
 	@Override
 	public void addAchievement(String user, Achievement a) {

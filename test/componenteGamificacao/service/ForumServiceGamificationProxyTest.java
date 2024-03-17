@@ -41,5 +41,22 @@ class ForumServiceGamificationProxyTest {
 		assertNotNull(achievement);
 		assertInstanceOf(Badge.class, achievement);
 	}
+	
+	@Test
+	void aoAdicionarUmComentarioPelaPrimeiraVezDeveGanharOBadgeLetMeAdd() {
+		forumService.addComment("moura", "Tópico aleatório", "Meu primeiro comentário");
+		List<Achievement> achievements = achievementStorage.getAchievements("moura");
+		assertEquals(2, achievements.size());
+		
+		Achievement achievement = achievementStorage.getAchievement("moura", "PARTICIPATION");
+		assertNotNull(achievement);
+		assertInstanceOf(Points.class, achievement);
+		Points points = (Points) achievement;
+		assertEquals(3, points.getQuantidadePontos());
+		
+		achievement = achievementStorage.getAchievement("moura", "LET ME ADD");
+		assertNotNull(achievement);
+		assertInstanceOf(Badge.class, achievement);
+	}
 
 }
