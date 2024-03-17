@@ -6,21 +6,21 @@ import componenteGamificacao.model.Points;
 import componenteGamificacao.storage.AchievementStorage;
 import componenteGamificacao.storage.AchievementStorageFactory;
 
-public class ObservadorPontosParticipation implements AchievementObserver {
+public class ObservadorBadgeInventor implements AchievementObserver {
 
 	@Override
 	public void achievementUpdate(String user, Achievement a) {
 		Points achievement = (Points) a;
-		if (achievement.getQuantidadePontos() == 100) {
+		if (achievement.getQuantidadePontos() >= 100) {
 			AchievementStorage storage = AchievementStorageFactory.getAchievementStorage();
-			storage.addAchievement(a.getUser(), new Badge("PART OF THE COMMUNITY", a.getUser()));
+			storage.addAchievement(a.getUser(), new Badge("INVENTOR", a.getUser()));
 			a.removerObservador();
 		}
 	}
-	
+
 	@Override
 	public boolean deveAdicionarObservador(Achievement a) {
-		if (a instanceof Points && "PARTICIPATION".equals(a.getName()))
+		if (a instanceof Points && "CREATION".equals(a.getName()))
 			return true;
 		
 		return false;

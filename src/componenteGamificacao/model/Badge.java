@@ -7,7 +7,7 @@ public class Badge extends Achievement {
 	}
 
 	@Override
-	public void adicionar() {
+	public void adicionar(Achievement a) {
 	}
 
 }

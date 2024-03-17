@@ -7,8 +7,8 @@ import componenteGamificacao.model.Achievement;
 public interface AchievementObserver {
 	
 	public final List<AchievementObserver> OBSERVADORES = List.of(
-		new ObservadorPontosCreation(),
-		new ObservadorPontosParticipation()
+		new ObservadorBadgeInventor(),
+		new ObservadorBadgePartOfTheCommunity()
 	);
 	
 	void achievementUpdate(String user, Achievement a);
