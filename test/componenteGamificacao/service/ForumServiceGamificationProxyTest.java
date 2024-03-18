@@ -148,5 +148,23 @@ class ForumServiceGamificationProxyTest {
 		List<Achievement> achievements = achievementStorage.getAchievements("moura");
 		assertEquals(0, achievements.size());
 	}
+	
+	@Test
+	void aoAcumular100PontosDoTipoCreationOUsuarioDeveReceberABadgeInventor() {
+		achievementStorage.addAchievement("moura", new Points("CREATION", "moura", 99));
+		forumService.likeTopic("moura", "Random Tópico", "randomUser");
+		List<Achievement> achievements = achievementStorage.getAchievements("moura");
+		assertEquals(2, achievements.size());
+		
+		Achievement achievement = achievementStorage.getAchievement("moura", "CREATION");
+		assertNotNull(achievement);
+		assertInstanceOf(Points.class, achievement);
+		Points points = (Points) achievement;
+		assertEquals(100, points.getQuantidadePontos());
+		
+		achievement = achievementStorage.getAchievement("moura", "INVENTOR");
+		assertNotNull(achievement);
+		assertInstanceOf(Badge.class, achievement);
+	}
 
 }

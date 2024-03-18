@@ -21,7 +21,7 @@ public abstract class Achievement {
 	}
 	
 	public String getUser() {
-		return name;
+		return user;
 	}
 	
 	public abstract void adicionar(Achievement a);
