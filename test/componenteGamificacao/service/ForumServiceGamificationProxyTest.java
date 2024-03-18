@@ -17,12 +17,13 @@ import componenteGamificacao.storage.MemoryAchievementStorage;
 class ForumServiceGamificationProxyTest {
 	
 	private AchievementStorage achievementStorage;
-	private ForumService forumService = new ForumServiceGamificationProxy(); 
+	private ForumService forumService;
 
 	@BeforeEach
 	void setUp() {
 		AchievementStorageFactory.setAchievementStorage(new MemoryAchievementStorage());
 		achievementStorage = AchievementStorageFactory.getAchievementStorage();
+		forumService = new ForumServiceGamificationProxy(new ForumServiceMock());
 	}
 
 	@Test
@@ -133,6 +134,19 @@ class ForumServiceGamificationProxyTest {
 		achievement = achievementStorage.getAchievement("moura", "LET ME ADD");
 		assertNotNull(achievement);
 		assertInstanceOf(Badge.class, achievement);
+	}
+	
+	@Test
+	void naoDeveAdicionarAchievementsCasoOcorraAlgumaExcecao() {
+		forumService = new ForumServiceGamificationProxy(new ForumServiceMockLancaExcecao());
+		
+		RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+			forumService.addTopic("moura", "Meu primeiro tópico");
+		});
+		assertEquals("Erro ao adicionar tópico", thrown.getMessage());
+
+		List<Achievement> achievements = achievementStorage.getAchievements("moura");
+		assertEquals(0, achievements.size());
 	}
 
 }
